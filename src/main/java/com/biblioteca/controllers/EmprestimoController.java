@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class EmprestimoController {
     @Autowired
     private EmprestimoService emprestimoService;
     
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @PostMapping("/realizar")
     public ResponseEntity<EmprestimoEntity> realizarEmprestimo(@RequestBody EmprestimoEntity emprestimo) {
         try {
@@ -34,6 +36,7 @@ public class EmprestimoController {
         }
     }
     
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<EmprestimoEntity> atualizarEmprestimo(@PathVariable Long id, @RequestBody EmprestimoEntity emprestimoAtualizado) {
         try {
@@ -54,6 +57,7 @@ public class EmprestimoController {
         }
     }
 
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @PostMapping("/devolver/{id}")
     public ResponseEntity<EmprestimoEntity> realizarDevolucao(@PathVariable Long id) {
         try {
@@ -64,6 +68,7 @@ public class EmprestimoController {
         }
     }
 
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @GetMapping("/localizar")
     public ResponseEntity<List<EmprestimoEntity>> getAllEmprestimos() {
         try {
@@ -74,6 +79,7 @@ public class EmprestimoController {
         }
     }
 
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @GetMapping("/localizar/{id}")
     public ResponseEntity<EmprestimoEntity> getEmprestimoById(@PathVariable Long id) {
         try {
@@ -87,7 +93,7 @@ public class EmprestimoController {
             return ResponseEntity.status(400).body(null);
         }
     }
-
+    @PreAuthorize("hasRole('ADM')")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deleteEmprestimo(@PathVariable Long id) {
         try {

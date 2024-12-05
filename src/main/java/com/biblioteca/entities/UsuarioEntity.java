@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
-public class UsuarioEntity {
+public class UsuarioEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +37,5 @@ public class UsuarioEntity {
     public enum TipoUsuario {
         ADM, FUNCIONARIO, USUARIO
     }
+    
 }
