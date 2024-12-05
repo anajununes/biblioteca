@@ -7,14 +7,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.biblioteca.controller.userLogin.LoginRequest;
-import com.biblioteca.entities.UserLoginEntity;
-import com.biblioteca.repositories.UserLoginRepository;
+import com.biblioteca.entities.UsuarioEntity;
+import com.biblioteca.repositories.UsuarioRepository;
+
 
 @Service
 public class UserLoginService {
 
     @Autowired
-    private UserLoginRepository userLoginRepository;
+    private UsuarioRepository usuarioRepository;
     @Autowired
     private JwtUtils jwtService;
     @Autowired
@@ -25,7 +26,7 @@ public class UserLoginService {
 
 
     public String logar(LoginRequest login) {
-        var data = userLoginRepository.findByUsername(login.loginUsuario()).get();
+        var data = usuarioRepository.findByUsername(login.loginUsuario()).get();
         System.out.println(data.getUsername());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -33,20 +34,20 @@ public class UserLoginService {
                         login.senhaUsuario()
                 )
         );
-        UserLoginEntity user = userLoginRepository.findByUsername(login.loginUsuario()).get();
+        UsuarioEntity user = usuarioRepository.findByUsername(login.loginUsuario()).get();
         String jwtToken = jwtService.generateToken(user);
 
         return jwtToken;
     }
 
-    public void saveNewUser(String usuario, String password, Boolean isAdmin) {
-    	userLoginRepository.save(
-                new UserLoginEntity(
+    public void saveNewUser(String nomeUsuario, String cpf, String senha) {
+    	usuarioRepository.save(
+                new UsuarioEntity(
                         null,
-                        usuario,
-                        passwordEncoder.encode(password),
-                        (isAdmin?"ADM":"USUARIO") 						// COLOCO O FUNCIONARIO?
-                )
+                        nomeUsuario,
+                        cpf,
+                        passwordEncoder.encode(senha),
+                        UsuarioEntity.TipoUsuario.USUARIO                        )
         );
     }
 

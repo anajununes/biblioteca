@@ -30,7 +30,7 @@ public class LivroController {
         return ResponseEntity.ok(livroService.save(livro));
     }
 
-    @PreAuthorize("hasRole('USUARIO')")
+    //@PreAuthorize("hasRole('USUARIO')")
     @GetMapping ("/listar")
     public ResponseEntity<List<LivroEntity>> listAll() {
         return ResponseEntity.ok(livroService.findAll());

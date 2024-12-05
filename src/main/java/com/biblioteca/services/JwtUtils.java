@@ -8,7 +8,7 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.biblioteca.config.JWTKeys;
-import com.biblioteca.entities.UserLoginEntity;
+import com.biblioteca.entities.UsuarioEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -17,11 +17,11 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtUtils {								// SERVICE GENERATOR WELLINGTON
 	
-    public String generateToken(UserLoginEntity userDetails) {
+    public String generateToken(UsuarioEntity userDetails) {
 
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("username", userDetails.getUsername());
-        extraClaims.put("role", userDetails.getRole());
+        extraClaims.put("role", userDetails.getTipoUsuario().name());
         //extraClaims.put("outracoisa", "teste");
 
 

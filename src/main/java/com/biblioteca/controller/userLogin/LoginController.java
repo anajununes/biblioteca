@@ -35,8 +35,8 @@ public class LoginController {
     }
 
     @PostMapping("novo-usuario/save")
-    public ResponseEntity<HttpStatus> saveNewUser(@RequestParam String usuario,@RequestParam String password,@RequestParam Boolean isAdmin){
-        userLoginService.saveNewUser(usuario, password,isAdmin);
+    public ResponseEntity<HttpStatus> saveNewUser(@RequestParam String nomeUsuario,@RequestParam String cpf, @RequestParam String senha){
+        userLoginService.saveNewUser(nomeUsuario, cpf, senha);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
