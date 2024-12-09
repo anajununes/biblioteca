@@ -2,6 +2,7 @@ package com.biblioteca.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +25,7 @@ public class MultaController {
     @Autowired
     private EmprestimoService emprestimoService;
     
+    @PreAuthorize("hasRole('ADM') OR hasRole ('FUNCIONARIO')")
     @PostMapping("/calcular/{idEmprestimo}")
     public ResponseEntity<MultaEntity> calcularMulta(@PathVariable Long idEmprestimo) {
         EmprestimoEntity emprestimo = emprestimoService.findById(idEmprestimo)
@@ -35,6 +37,7 @@ public class MultaController {
         return ResponseEntity.ok(multa);
     }
     
+    @PreAuthorize("hasRole('ADM')")
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MultaEntity> atualizarMulta(@PathVariable Long id, @RequestBody MultaEntity multaAtualizada) {
         try {
